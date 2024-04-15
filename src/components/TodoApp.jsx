@@ -2,19 +2,20 @@ import { eventWrapper } from "@testing-library/user-event/dist/utils";
 import React, { useState } from "react";
 
 const TodoApp = () => {
-  const [todos, setTodos] = useState([
-    "Codding some application",
-    "Designing some application",
-    "Taking Tea",
-    "Doing some serious application",
-  ]);
+  const [todos, setTodos] = useState(
+    JSON.parse(localStorage.getItem("todos")) || []
+  );
 
   const [input, setInput] = useState("");
 
   const addTodo = (event) => {
     event.preventDefault();
 
-    setTodos([...todos, input]);
+    const newTodos = [...todos, input];
+
+    setTodos(newTodos);
+
+    localStorage.setItem("todos", JSON.stringify(newTodos));
   };
 
   return (
